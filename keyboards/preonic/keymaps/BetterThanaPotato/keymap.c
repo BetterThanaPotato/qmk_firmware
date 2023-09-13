@@ -123,6 +123,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
+//need to change the layer switch keys. they are being interpreted as MO() because of the function down below
+//might need to have them change set_single_persistent_default_layer() but maybe a simple TO() would work
+//NUMPAD works because its layer_invert()
+//cant get out of NUMPAD with adjust layer have to use dedicate NUMPAD key. neither BASE or NUMPAD work on adjust layer when in NUMPAD
+//probably just need to put it on a lower layer
+
 /* Numpad
  * ,-----------------------------------------------------------------------------------.
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
