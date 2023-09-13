@@ -21,7 +21,7 @@ enum preonic_layers {
   _BASE,
   _LOWER,
   _RAISE,
-  _ADJUST
+  _ADJUST,
   _NUMPAD
 };
 
@@ -57,7 +57,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  NUMPAD,  KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_RSFT, KC_SPC,  RAISE,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  NUMPAD,  KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_RSFT, KC_SPC,  RAISE,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+),
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
@@ -141,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PMNS, KC_TAB,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PSLS, KC_PENT,
   _______, _______, _______, _______, LOWER,   _______, _______, RAISE,   KC_P0,   KC_PDOT, KC_PCMM, KC_NUM
-)
+),
 
 
 };
@@ -187,6 +188,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		  }
           return false;
           break;
+	}
     return true;
 };
 
