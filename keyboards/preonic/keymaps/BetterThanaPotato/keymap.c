@@ -33,6 +33,8 @@ enum preonic_keycodes {
   NUMPAD
 };
 
+//would like to have _GAME layer or ability to swap/disable/change certain keys (ie. space and Rshift)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 //How do I generate this ASCII art from my keymaps?
@@ -148,6 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //can I have a quad layer? or two tri layers?
 //if im on _NUMPAD and I press RAISE will _RAISE activate over _NUMPAD? or will _NUMPAD still be over _RAISE because its a higher layer?
 //could I get around this by turning layers off?
+//or just move _NUMPAD to a lower layer
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
