@@ -35,6 +35,8 @@ enum preonic_keycodes {
 };
 
 //would like to have _GAME layer or ability to swap/disable/change certain keys (ie. space and Rshift)
+//move F1-F12 to _LOWER and F12-F24 to _RAISE
+//F keys on KC_1 to KC_0 instead of KC_GRV to KC_BSPC
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -159,6 +161,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //if im on _NUMPAD and I press RAISE will _RAISE activate over _NUMPAD? or will _NUMPAD still be over _RAISE because its a higher layer?
 //could I get around this by turning layers off?
 //or just move _NUMPAD to a lower layer
+//could maybe do uprinf(layer_state) instead
+//uprintf(keycode) istead of defining variable
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
