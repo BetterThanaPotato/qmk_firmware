@@ -163,34 +163,48 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
         case BASE:
+          selected_layer = BASE;
           if (record->event.pressed) {
-            set_single_persistent_default_layer(_BASE);
+            set_single_persistent_default_layer(_BASE)
+            uprintf(selected_layer,layer_state_is(_+selected_layer));
           }
           return false;
           break;
         case NUMPAD:
+          selected_layer = NUMPAD;
           if (record->event.pressed) {
             layer_invert(_NUMPAD);
+            uprintf(selected_layer,layer_state_is(_+selected_layer));
 		      }
           return false;
           break;
         case LOWER:
+          selected_layer = LOWER;
           if (record->event.pressed) {
             layer_on(_LOWER);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
+            uprintf(selected_layer,layer_state_is(_+selected_layer));
+            uprintf(ADJUST,layer_state_is(_ADJUST));
           } else {
             layer_off(_LOWER);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
+            uprintf(selected_layer,layer_state_is(_+selected_layer));
+            uprintf(ADJUST,layer_state_is(_ADJUST));
           }
           return false;
           break;
         case RAISE:
+          selected_layer = RAISE;
           if (record->event.pressed) {
             layer_on(_RAISE);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
-          } else {
+            uprintf(selected_layer,layer_state_is(_+selected_layer));
+            uprintf(ADJUST,layer_state_is(_ADJUST));
+         } else {
             layer_off(_RAISE);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
+            uprintf(selected_layer,layer_state_is(_+selected_layer));
+            uprintf(ADJUST,layer_state_is(_ADJUST));
           }
           return false;
           break;
