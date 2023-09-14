@@ -1,2 +1,3 @@
 SRC += muse.c
 CONSOLE_ENABLE=yes
+CAPS_WORD_ENABLE = yes

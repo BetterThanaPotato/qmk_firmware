@@ -16,21 +16,22 @@
 
 #include QMK_KEYBOARD_H
 #include "muse.h"
+#include "print.h"
 
 enum preonic_layers {
   _BASE,
+  _NUMPAD,
   _LOWER,
   _RAISE,
-  _ADJUST,
-  _NUMPAD
+  _ADJUST
 };
 
 enum preonic_keycodes {
   BASE = SAFE_RANGE,
+  NUMPAD,
   LOWER,
   RAISE,
-  ADJUST,
-  NUMPAD
+  ADJUST
 };
 
 //would like to have _GAME layer or ability to swap/disable/change certain keys (ie. space and Rshift)
@@ -58,6 +59,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
   NUMPAD,  KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_RSFT, KC_SPC,  RAISE,   XXXXXXX, KC_MUTE, KC_MPLY, XXXXXXX
+),
+
+//need to change the layer switch keys. they are being interpreted as MO() because of the function down below
+//might need to have them change set_single_persistent_default_layer() but maybe a simple TO() would work
+//NUMPAD works because its layer_invert()
+//cant get out of NUMPAD with adjust layer have to use dedicate NUMPAD key. neither BASE or NUMPAD work on adjust layer when in NUMPAD
+//probably just need to put it on a lower layer
+
+/* Numpad
+ * ,-----------------------------------------------------------------------------------.
+ * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      | Reset| Debug|      |      |      |      |      |      |      |      |  Del |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |      |Aud cy|Aud on|AudOff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|      |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_NUMPAD] = LAYOUT_preonic_grid(
+  XXXXXXX, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_PEQL, KC_PAST, KC_LPRN, KC_RPRN, KC_BSPC,
+  _______, XXXXXXX, KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_CALC, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, KC_DEL,
+  _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PMNS, KC_TAB,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PSLS, KC_PENT,
+  _______, _______, _______, _______, LOWER,   _______, _______, RAISE,   KC_P0,   KC_PDOT, KC_PCMM, KC_NUM
 ),
 
 /* Lower
@@ -116,38 +144,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid(
-  BASE,    LOWER,   RAISE,   ADJUST,  NUMPAD,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC,
+  BASE,    NUMPAD,  LOWER,   RAISE,   ADJUST,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC,
   KC_TAB,  QK_BOOT, DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, XXXXXXX, MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-),
-
-//need to change the layer switch keys. they are being interpreted as MO() because of the function down below
-//might need to have them change set_single_persistent_default_layer() but maybe a simple TO() would work
-//NUMPAD works because its layer_invert()
-//cant get out of NUMPAD with adjust layer have to use dedicate NUMPAD key. neither BASE or NUMPAD work on adjust layer when in NUMPAD
-//probably just need to put it on a lower layer
-
-/* Numpad
- * ,-----------------------------------------------------------------------------------.
- * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Reset| Debug|      |      |      |      |      |      |      |      |  Del |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |Aud cy|Aud on|AudOff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|      |      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-[_NUMPAD] = LAYOUT_preonic_grid(
-  XXXXXXX, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_PEQL, KC_PAST, KC_LPRN, KC_RPRN, KC_BSPC,
-  _______, XXXXXXX, KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_CALC, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, KC_DEL,
-  _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PMNS, KC_TAB,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PSLS, KC_PENT,
-  _______, _______, _______, _______, LOWER,   _______, _______, RAISE,   KC_P0,   KC_PDOT, KC_PCMM, KC_NUM
 ),
 
 
@@ -165,6 +166,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           if (record->event.pressed) {
             set_single_persistent_default_layer(_BASE);
           }
+          return false;
+          break;
+        case NUMPAD:
+          if (record->event.pressed) {
+            layer_invert(_NUMPAD);
+		      }
           return false;
           break;
         case LOWER:
@@ -185,13 +192,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             layer_off(_RAISE);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           }
-          return false;
-          break;
-        case NUMPAD:
-          if (record->event.pressed) {
-            layer_invert(_NUMPAD);
-			//did i use the layer_invert function correctly? does return false need to be within {} and does it need to be reture true?
-		  }
           return false;
           break;
 	}
