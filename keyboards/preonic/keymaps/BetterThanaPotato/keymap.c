@@ -163,6 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //or just move _NUMPAD to a lower layer
 //could maybe do uprinf(layer_state) instead
 //uprintf(keycode) istead of defining variable
+//test
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
