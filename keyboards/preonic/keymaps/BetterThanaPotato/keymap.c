@@ -28,7 +28,6 @@ enum preonic_layers {
 
 enum preonic_keycodes {
   BASE = SAFE_RANGE,
-  GAME,
   NUMPAD,
   LOWER,
   RAISE,
