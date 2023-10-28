@@ -35,9 +35,6 @@ enum preonic_keycodes {
   RAISE,
   ADJUST,
   TNUMPAD,
-  TOLOWER,
-  TORAISE,
-  TADJUST
 };
 
 //would like to have _GAME layer or ability to swap/disable/change certain keys (ie. space and Rshift)
@@ -64,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  NUMPAD,  KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_RSFT, KC_SPC,  RAISE,   XXXXXXX, KC_MUTE, KC_MPLY, XXXXXXX
+  NUMPAD,  KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_RSFT, KC_SPC,  RAISE,   _______, KC_MUTE, KC_MPLY, _______
 ),
 
 //need to change the layer switch keys. they are being interpreted as MO() because of the function down below
@@ -173,7 +170,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid(
-  BASE,    GAME,    TNUMPAD, TOLOWER, TORAISE, TADJUST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC,
+  BASE,    GAME,    TNUMPAD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC,
   KC_TAB,  QK_BOOT, DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, XXXXXXX, MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
@@ -206,24 +203,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TNUMPAD:
           if (record->event.pressed) {
             layer_move(_NUMPAD);
-		      }
-          return false;
-          break;
-        case TOLOWER:
-          if (record->event.pressed) {
-            layer_move(_LOWER);
-		      }
-          return false;
-          break;
-        case TORAISE:
-          if (record->event.pressed) {
-            layer_move(_RAISE);
-		      }
-          return false;
-          break;
-        case TADJUST:
-          if (record->event.pressed) {
-            layer_move(_ADJUST);
 		      }
           return false;
           break;
