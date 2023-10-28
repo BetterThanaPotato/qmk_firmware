@@ -193,7 +193,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
         case BASE:
           if (record->event.pressed) {
-            set_single_persistent_default_layer(_BASE);
+            layer_move(_BASE);
           }
           return false;
           break;
