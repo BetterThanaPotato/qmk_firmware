@@ -37,11 +37,7 @@ enum preonic_keycodes {
   TNUMPAD,
 };
 
-//would like to have _GAME layer or ability to swap/disable/change certain keys (ie. space and Rshift)
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-//How do I generate this ASCII art from my keymaps?
 
 /* Base
  * ,-----------------------------------------------------------------------------------.
@@ -63,12 +59,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
   NUMPAD,  KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_RSFT, KC_SPC,  RAISE,   _______, KC_MUTE, KC_MPLY, _______
 ),
-
-//need to change the layer switch keys. they are being interpreted as MO() because of the function down below
-//might need to have them change set_single_persistent_default_layer() but maybe a simple TO() would work
-//NUMPAD works because its layer_invert()
-//cant get out of NUMPAD with adjust layer have to use dedicate NUMPAD key. neither BASE or NUMPAD work on adjust layer when in NUMPAD
-//probably just need to put it on a lower layer
 
 /* Game
  * ,-----------------------------------------------------------------------------------.
@@ -177,14 +167,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
-
 };
 
 //add in code to report selected layer
 //can I have a quad layer? or two tri layers?
-//if im on _NUMPAD and I press RAISE will _RAISE activate over _NUMPAD? or will _NUMPAD still be over _RAISE because its a higher layer?
-//could I get around this by turning layers off?
-//or just move _NUMPAD to a lower layer
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
