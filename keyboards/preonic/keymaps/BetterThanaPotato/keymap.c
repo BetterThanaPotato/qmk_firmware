@@ -33,7 +33,11 @@ enum preonic_keycodes {
   NUMPAD,
   LOWER,
   RAISE,
-  ADJUST
+  ADJUST,
+  TNUMPAD,
+  TOLOWER,
+  TORAISE,
+  TADJUST
 };
 
 //would like to have _GAME layer or ability to swap/disable/change certain keys (ie. space and Rshift)
@@ -169,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid(
-  BASE,    NUMPAD,  LOWER,   RAISE,   ADJUST,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC,
+  BASE,    GAME,    TNUMPAD, TOLOWER, TORAISE, TADJUST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC,
   KC_TAB,  QK_BOOT, DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, XXXXXXX, MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
@@ -195,7 +199,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           break;
         case GAME:
           if (record->event.pressed) {
-            layer_invert(_GAME);
+            layer_move(_GAME);
+		      }
+          return false;
+          break;
+        case TNUMPAD:
+          if (record->event.pressed) {
+            layer_move(_NUMPAD);
+		      }
+          return false;
+          break;
+        case TOLOWER:
+          if (record->event.pressed) {
+            layer_move(_LOWER);
+		      }
+          return false;
+          break;
+        case TORAISE:
+          if (record->event.pressed) {
+            layer_move(_RAISE);
+		      }
+          return false;
+          break;
+        case TADJUST:
+          if (record->event.pressed) {
+            layer_move(_ADJUST);
 		      }
           return false;
           break;
