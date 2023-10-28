@@ -20,6 +20,7 @@
 
 enum preonic_layers {
   _BASE,
+  _GAME,
   _NUMPAD,
   _LOWER,
   _RAISE,
@@ -28,6 +29,7 @@ enum preonic_layers {
 
 enum preonic_keycodes {
   BASE = SAFE_RANGE,
+  GAME,
   NUMPAD,
   LOWER,
   RAISE,
@@ -66,6 +68,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //NUMPAD works because its layer_invert()
 //cant get out of NUMPAD with adjust layer have to use dedicate NUMPAD key. neither BASE or NUMPAD work on adjust layer when in NUMPAD
 //probably just need to put it on a lower layer
+
+/* Game
+ * ,-----------------------------------------------------------------------------------.
+ * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Del  |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_GAME] = LAYOUT_preonic_grid(
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, KC_LGUI, _______, KC_LCTL, _______, KC_SPC,  _______, _______, _______, _______, _______, _______,
+),
 
 /* Numpad
  * ,-----------------------------------------------------------------------------------.
@@ -168,6 +191,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           if (record->event.pressed) {
             set_single_persistent_default_layer(_BASE);
           }
+          return false;
+          break;
+        case GAME:
+          if (record->event.pressed) {
+            layer_invert(_GAME);
+		      }
           return false;
           break;
         case NUMPAD:
